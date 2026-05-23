@@ -10,7 +10,6 @@ import {
   createNoteReqSchema,
   deleteNoteReqSchema,
   getNoteByIdReqSchema,
-  getNoteReqSchema,
   paginationSchema,
   updateNoteReqSchema,
 } from "./note.type.js";
@@ -21,8 +20,23 @@ export const getAllNotes = async (req: Request, res: Response) => {
 
   const limit = query.limit;
   const page = query.page;
+  const search = query.search;
+  const sort = query.sort;
 
-  const result = await getAllNotesService({page, limit});
+  const result = await getAllNotesService({
+    page,
+    limit,
+    search,
+    sort,
+    // page,
+    // limit,
+    //  ...(query.search && {
+    //   search: query.search,
+    // }),
+    // ...(query.sort && {
+    //   sort: query.sort,
+    // }),
+  });
 
   console.log(req.query);
 
@@ -32,7 +46,6 @@ export const getAllNotes = async (req: Request, res: Response) => {
     pagination: {
       page,
       limit,
-     
     },
   });
   // res.status(200).json(result);

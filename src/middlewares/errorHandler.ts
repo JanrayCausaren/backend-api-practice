@@ -5,9 +5,9 @@ import type { AppError } from "../error/app.error.js";
 //This is the single place all errors land. It checks if the error is one of yours (operational) or an unexpected bug, and responds accordingly.
 export const errorHandler = (
   err: AppError,        // ← the error that was thrown
-  req: Request,
+  _req: Request,
   res: Response,
-  next: NextFunction    // ← Express requires this 4th arg
+  _next: NextFunction    // ← Express requires this 4th arg
 ) => {
 
   if (err.isOperational) {

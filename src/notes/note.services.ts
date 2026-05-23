@@ -3,8 +3,36 @@ import type { CreateNote, Note, UpdateNote } from "./note.type.js";
 let notes: Note[] = [
   {
     id: 1,
-    title: "Note 1",
-    content: "loremasdfhfd",
+    title: "A",
+    content: "aadflkjasldfjlkasdfkahdklfhajkdfh",
+    createdAt: new Date().toISOString(),
+    deletedAt: null,
+  },
+  {
+    id: 2,
+    title: "D",
+    content: "aadflkjasldfjlkasdfkahdklfhajkdfh",
+    createdAt: new Date().toISOString(),
+    deletedAt: null,
+  },
+  {
+    id: 3,
+    title: "Learning C",
+    content: "aadflkjasldfjlkasdfkahdklfhajkdfh",
+    createdAt: new Date().toISOString(),
+    deletedAt: null,
+  },
+  {
+    id: 4,
+    title: "Learning A",
+    content: "aadflkjasldfjlkasdfkahdklfhajkdfh",
+    createdAt: new Date().toISOString(),
+    deletedAt: null,
+  },
+  {
+    id: 5,
+    title: "Learning Z",
+    content: "aadflkjasldfjlkasdfkahdklfhajkdfh",
     createdAt: new Date().toISOString(),
     deletedAt: null,
   },
@@ -13,14 +41,36 @@ let notes: Note[] = [
 type GetAllNotesParams = {
   page: number;
   limit: number;
+  search?: string | undefined;
+  sort: "asc" | "desc" | "all";
 };
 
 export const getAllNotesService = async ({
   page,
   limit,
+  search,
+  sort,
 }: GetAllNotesParams): Promise<Note[] | null> => {
+  // const skip = (page - 1) * limit;
+  // let filteredNotes : Note[];
+  // filteredNotes = notes.filter((n) => n.title.toLowerCase().includes(search?.toLowerCase()) n.deletedAt === null);
+  // const filteredNotes = notes.filter((n) => n.deletedAt === null);
   const skip = (page - 1) * limit;
-  const filteredNotes = notes.filter((n) => n.deletedAt === null);
+
+  let filteredNotes = notes.filter((n) => n.deletedAt === null);
+
+  if (search) {
+    filteredNotes = filteredNotes.filter((n) =>
+      n.title.toLowerCase().includes(search.toLowerCase()),
+    );
+  }
+
+  if (sort === "asc") {
+    filteredNotes.sort((a, b) => a.title.localeCompare(b.title));
+  }
+  if (sort === "desc") {
+    filteredNotes.sort((a, b) => b.title.localeCompare(a.title));
+  }
 
   const paginatedNotes = filteredNotes.slice(skip, skip + limit);
 
