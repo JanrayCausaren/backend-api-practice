@@ -1,4 +1,4 @@
-import { NoteEntity } from "../services/db/note.model.js";
+import { NoteEntity, TaskTry } from "../services/db/note.model.js";
 import type { CreateNote, Note, UpdateNote } from "./note.type.js";
 
 let notes: Note[] = [
@@ -95,6 +95,7 @@ export const createNoteService = async (
   };
 
   await NoteEntity.create({ title: params.title, content: params.content });
+  await TaskTry.create({ title: params.title, content: params.content });
 
   console.log("Succesfully send");
 
