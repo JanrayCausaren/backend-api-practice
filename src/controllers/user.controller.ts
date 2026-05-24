@@ -4,7 +4,7 @@ import type { Request, Response, NextFunction } from "express";
 import * as UserService from "../services/user.service.js";
 
 export const getAllUsers = async (
-  req: Request,
+  _req: Request,
   res: Response,
   next: NextFunction,
 ): Promise<void> => {
@@ -16,7 +16,7 @@ export const getAllUsers = async (
   }
 };
 
-export async function createUser(req: Request, res: Response) {
+export async function createUser(_req: Request, res: Response) {
     const newUser = console.log('new user: Janray');
     res.send(newUser);
 }
