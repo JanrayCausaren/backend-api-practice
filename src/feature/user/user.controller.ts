@@ -1,7 +1,7 @@
 // src/controllers/user.controller.ts
 // src/controllers/user.controller.ts
 import type { Request, Response, NextFunction } from "express";
-import * as UserService from "../services/user.service.js";
+import * as UserService from "./user.service.js";
 
 export const getAllUsers = async (
   _req: Request,

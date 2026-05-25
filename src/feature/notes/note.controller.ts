@@ -13,7 +13,7 @@ import {
   paginationSchema,
   updateNoteReqSchema,
 } from "./note.type.js";
-import { NotFoundError } from "../error/app.error.js";
+import { NotFoundError } from "../../error/app.error.js";
 
 export const getAllNotes = async (req: Request, res: Response) => {
   const query = paginationSchema.parse(req.query);

@@ -1,4 +1,4 @@
-import { NoteEntity, TaskTry } from "../services/db/note.model.js";
+import { NoteEntity, TaskTry } from "./note.model.js";
 import type { CreateNote, Note, UpdateNote } from "./note.type.js";
 
 let notes: Note[] = [

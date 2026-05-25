@@ -4,10 +4,10 @@ import {
   getAllTask,
   getTaskById,
   updateTask,
-} from "../controllers/task.controller.js";
-import { validate } from "../middlewares/validate.js";
-import { createTaskSchema, updateTaskSchema } from "../types/task.types.js";
-import { asyncWrapper } from "../middlewares/asyncWrapper.js";
+} from "./task.controller.js";
+import { validate } from "../../middlewares/validate.js";
+import { createTaskSchema, updateTaskSchema } from "./task.types.js";
+import { asyncWrapper } from "../../middlewares/asyncWrapper.js";
 // import { createTaskSchema } from '../schema/task.schema.js';
 
 const router = Router();

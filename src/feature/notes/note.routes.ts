@@ -1,8 +1,8 @@
 import { Router } from "express";
-import {validate } from "../middlewares/validate.js";
+import {validate } from "../../middlewares/validate.js";
 import { createNote, deleteNote, getAllNotes, getNoteById, updateNote,  } from "./note.controller.js";
 import { createNoteReqSchema, deleteNoteReqSchema, getNoteByIdReqSchema, getNoteReqSchema, updateNoteReqSchema } from "./note.type.js";
-import { asyncWrapper } from "../middlewares/asyncWrapper.js";
+import { asyncWrapper } from "../../middlewares/asyncWrapper.js";
 
 const router = Router();
 

@@ -1,13 +1,9 @@
 import { type Request, type Response } from "express";
-import {
-  createTaskService,
-  getTaskByIdService,
-  getTaskService,
-  updateTaskService,
-} from "../services/task.service.js";
-import type { CreateTask, UpdateTask } from "../types/task.types.js";
-import { NotFoundError, ValidationError } from "../error/app.error.js";
-// import { number } from "zod";
+import { ValidationError, NotFoundError } from "../../error/app.error.js";
+import { getTaskService, getTaskByIdService, createTaskService, updateTaskService } from "./task.service.js";
+import type { CreateTask, UpdateTask } from "./task.types.js";
+
+
 
 export const getAllTask = async (_req: Request, res: Response) => {
   const allTask = await getTaskService();

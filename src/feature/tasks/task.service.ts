@@ -1,4 +1,4 @@
-import type { CreateTask, Task, UpdateTask } from "../types/task.types.js";
+import type { CreateTask, Task, UpdateTask } from "./task.types.js";
 
 let tasks: Task[] = [
   {
