@@ -1,5 +1,5 @@
 import type { Request, Response, NextFunction } from "express";
-import type { AppError } from "../error/app.error.js";
+import type { AppError } from "../utils/error/app.error.js";
 
 
 //This is the single place all errors land. It checks if the error is one of yours (operational) or an unexpected bug, and responds accordingly.
