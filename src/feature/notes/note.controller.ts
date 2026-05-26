@@ -6,14 +6,18 @@ import {
   getNoteByIdService,
   updateNoteService,
 } from "./note.services.js";
+
+import { NotFoundError, ValidationError } from "../../utils/error/app.error.js";
 import {
   createNoteReqSchema,
   deleteNoteReqSchema,
   getNoteByIdReqSchema,
   paginationSchema,
   updateNoteReqSchema,
-} from "./note.type.js";
-import { NotFoundError } from "../../error/app.error.js";
+} from "./model/note.schema.js";
+import { successResponse } from "../../utils/success.response.js";
+import { successPaginatedResponse } from "../../utils/paginated.response.js";
+import mongoose from "mongoose";
 
 export const getAllNotes = async (req: Request, res: Response) => {
   const query = paginationSchema.parse(req.query);
@@ -40,14 +44,22 @@ export const getAllNotes = async (req: Request, res: Response) => {
 
   console.log(req.query);
 
-  return res.json({
+  successPaginatedResponse({
+    res: res,
+    statusCode: 200,
     message: "Pagination validated",
-    data: result,
-    pagination: {
-      page,
-      limit,
-    },
+    data: result.data,
+    pagination: result.pagination,
   });
+
+  // res.json({
+  //   message: "",
+  //   data: result,
+  //   pagination: {
+  //     page,
+  //     limit,
+  //   },
+  // });
   // res.status(200).json(result);
 };
 
@@ -58,14 +70,20 @@ export const getNoteById = async (req: Request, res: Response) => {
 
   const id = parsed.params.id;
 
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    throw new ValidationError("Invalid note ID");
+  }
+
   const note = await getNoteByIdService(id);
 
   if (!note) {
     throw new NotFoundError("Note not found");
   }
 
-  res.status(200).json({
-    success: true,
+  successResponse({
+    res: res,
+    statusCode: 200,
+    message: "Resource Found",
     data: note,
   });
 };
@@ -77,10 +95,17 @@ export const createNote = async (req: Request, res: Response) => {
 
   const result = await createNoteService(parsed.body);
 
-  res.status(201).json({
-    success: true,
+  successResponse({
+    message: "Note Created!",
     data: result,
+    res: res,
+    statusCode: 201,
   });
+
+  // res.status(201).json({
+  //   success: true,
+  //   data: result,
+  // });
 };
 
 export const updateNote = async (req: Request, res: Response) => {
@@ -89,18 +114,27 @@ export const updateNote = async (req: Request, res: Response) => {
     body: req.body,
   });
 
-  const updated = await getNoteByIdService(parsed.params.id);
-
-  if (!updated) {
+  if (!mongoose.Types.ObjectId.isValid(parsed.params.id)) {
     throw new NotFoundError("Note not found");
   }
 
   const result = await updateNoteService(parsed);
 
-  res.status(200).json({
-    success: true,
+  if (!result) {
+    throw new NotFoundError("Note not found");
+  }
+
+  successResponse({
+    res: res,
+    statusCode: 200,
+    message: "Note Updated",
     data: result,
   });
+
+  // res.status(200).json({
+  //   success: true,
+  //   data: result,
+  // });
 };
 
 export const deleteNote = async (req: Request, res: Response) => {
@@ -108,14 +142,21 @@ export const deleteNote = async (req: Request, res: Response) => {
     params: req.params,
   });
 
+  if (!mongoose.Types.ObjectId.isValid(parsed.params.id)) {
+    throw new NotFoundError("Note not found");
+  }
+
   const result = await deleteNoteService(parsed.params.id);
 
   if (!result) {
     throw new NotFoundError("Note not found");
   }
 
-  res.status(200).json({
-    success: true,
-    message: "Note Deleted Successfuly",
+  successResponse({
+    res: res,
+    statusCode: 200,
+    message: "Deleted Successfuly",
+    data: result,
   });
+
 };

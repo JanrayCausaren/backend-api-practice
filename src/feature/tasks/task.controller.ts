@@ -1,5 +1,5 @@
 import { type Request, type Response } from "express";
-import { ValidationError, NotFoundError } from "../../error/app.error.js";
+import { ValidationError, NotFoundError } from "../../utils/error/app.error.js";
 import { getTaskService, getTaskByIdService, createTaskService, updateTaskService } from "./task.service.js";
 import type { CreateTask, UpdateTask } from "./task.types.js";
 
