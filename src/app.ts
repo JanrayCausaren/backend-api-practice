@@ -20,10 +20,15 @@ import { errorHandler } from "./middlewares/errorHandler.js";
 import noteRoutes from "./feature/notes/note.routes.js";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
+import cors from "cors";
 
 dotenv.config();
 
 const app = express();
+app.use(
+  cors(),
+);
+
 app.use(express.json());
 await main().catch((err) => console.log(`Error connection: ${err}`));
 async function main() {
